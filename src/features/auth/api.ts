@@ -50,3 +50,14 @@ export async function login(email: string, password: string): Promise<Profile> {
 
   return profile;
 }
+
+
+export async function getAccessToken(): Promise<string> {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data.session) {
+    throw new Error("انتهت جلسة الدخول. سجّل الدخول من جديد.");
+  }
+
+  return data.session.access_token;
+}
