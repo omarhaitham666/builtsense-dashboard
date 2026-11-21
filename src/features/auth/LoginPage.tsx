@@ -1,15 +1,7 @@
 import { useRef, useState, type FormEvent } from "react";
-import {
-  ArrowLeft,
-  Eye,
-  EyeOff,
-  LoaderCircle,
-  LockKeyhole,
-  Mail,
-} from "lucide-react";
-
 import { login, type Profile } from "./api";
 import "./LoginPage.css";
+import LoginBrand from "./LoginBrand";
 
 type LoginPageProps = {
   onLogin: (profile: Profile) => void;
@@ -21,13 +13,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [logoFailed, setLogoFailed] = useState(false);
-
   const submitting = useRef(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     if (submitting.current) return;
 
     submitting.current = true;
@@ -47,117 +36,73 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
   return (
     <main className="bs-login" dir="rtl">
-      <section className="bs-login__stage" aria-labelledby="login-title">
-        <div className="bs-login__brand">
-          {logoFailed ? (
-            <span className="bs-login__wordmark" dir="ltr">
-              BUILT <strong>SENSE</strong>
-            </span>
-          ) : (
-            <img
-              className="bs-login__logo"
-              src={`${import.meta.env.BASE_URL}built-sense-logo.png`}
-              alt="Built Sense"
-              width="500"
-              height="205"
-              onError={() => setLogoFailed(true)}
+      <div className="bs-login-shell">
+        <LoginBrand />
+
+        <form
+          className="bs-login-card"
+          onSubmit={handleSubmit}
+          aria-labelledby="bs-login-title"
+          aria-busy={loading}
+        >
+          <h1 id="bs-login-title">تسجيل الدخول</h1>
+
+          <div className="bs-login-field">
+            <label htmlFor="bs-login-email">البريد الإلكتروني</label>
+            <input
+              id="bs-login-email"
+              name="email"
+              type="email"
+              dir="ltr"
+              autoComplete="username"
+              placeholder="name@company.com"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
+          </div>
+
+          <div className="bs-login-field">
+            <label htmlFor="bs-login-password">كلمة المرور</label>
+
+            <div className="bs-login-password">
+              <input
+                id="bs-login-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                dir="ltr"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+
+              <button
+                className="bs-login-toggle"
+                type="button"
+                aria-controls="bs-login-password"
+                aria-label={
+                  showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"
+                }
+                onClick={() => setShowPassword((value) => !value)}
+              >
+                {showPassword ? "إخفاء" : "إظهار"}
+              </button>
+            </div>
+          </div>
+
+          {error && (
+            <p className="bs-login-error" role="alert">
+              {error}
+            </p>
           )}
-        </div>
 
-        <div className="bs-login__card">
-          <header className="bs-login__header">
-            <span className="bs-login__accent" aria-hidden="true" />
-            <h1 id="login-title">تسجيل الدخول</h1>
-          </header>
-
-          <form
-            className="bs-login__form"
-            onSubmit={handleSubmit}
-            aria-busy={loading}
-          >
-            <div className="bs-login__field">
-              <label htmlFor="login-email">البريد الإلكتروني</label>
-
-              <div className="bs-login__input-wrap">
-                <Mail size={18} aria-hidden="true" />
-
-                <input
-                  id="login-email"
-                  name="email"
-                  type="email"
-                  dir="ltr"
-                  autoComplete="username"
-                  autoCapitalize="none"
-                  spellCheck={false}
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="bs-login__field">
-              <label htmlFor="login-password">كلمة المرور</label>
-
-              <div className="bs-login__input-wrap">
-                <LockKeyhole size={18} aria-hidden="true" />
-
-                <input
-                  id="login-password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  dir="ltr"
-                  autoComplete="current-password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  required
-                />
-
-                <button
-                  className="bs-login__eye"
-                  type="button"
-                  onClick={() => setShowPassword((visible) => !visible)}
-                  aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
-                  aria-controls="login-password"
-                >
-                  {showPassword ? (
-                    <EyeOff size={18} aria-hidden="true" />
-                  ) : (
-                    <Eye size={18} aria-hidden="true" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {error && (
-              <p className="bs-login__error" role="alert">
-                {error}
-              </p>
-            )}
-
-            <button
-              className="bs-login__submit"
-              type="submit"
-              disabled={loading}
-            >
-              <span>{loading ? "جارٍ تسجيل الدخول…" : "دخول"}</span>
-
-              {loading ? (
-                <LoaderCircle
-                  className="bs-login__spinner"
-                  size={19}
-                  aria-hidden="true"
-                />
-              ) : (
-                <ArrowLeft size={19} aria-hidden="true" />
-              )}
-            </button>
-          </form>
-        </div>
-      </section>
+          <button className="bs-login-submit" type="submit" disabled={loading}>
+            {loading && <span className="bs-login-spinner" aria-hidden="true" />}
+            {loading ? "جارٍ تسجيل الدخول…" : "دخول"}
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

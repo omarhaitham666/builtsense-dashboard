@@ -1,0 +1,151 @@
+/* الهالة خلف الكارد */
+.bs-login {
+  position: relative;
+  isolation: isolate;
+}
+
+.bs-login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 32% 48%,
+      rgb(52 111 214 / 14%),
+      transparent 33%
+    ),
+    radial-gradient(
+      ellipse at 68% 57%,
+      rgb(70 145 255 / 10%),
+      transparent 30%
+    );
+  transform-origin: center;
+  animation: bs-login-aura 10s ease-in-out infinite alternate;
+}
+
+@keyframes bs-login-aura {
+  from {
+    transform: scale(0.94);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* الاسم ثابت، والعلامة هي الجزء التفاعلي */
+.bs-login .bs-brand-interactive {
+  animation: none;
+  gap: 10px;
+}
+
+.bs-brand-stage {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 84px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  perspective: 420px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bs-brand-stage[data-dragging] {
+  cursor: grabbing;
+}
+
+.bs-brand-stage:focus-visible {
+  outline: 2px solid #76a8ff;
+  outline-offset: 4px;
+}
+
+.bs-brand-intro,
+.bs-brand-rotor {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 64px;
+  transform-style: preserve-3d;
+}
+
+.bs-brand-intro {
+  animation: bs-logo-intro 820ms cubic-bezier(.18, .72, .22, 1) both;
+}
+
+.bs-brand-rotor {
+  --pitch: -7deg;
+  --yaw: -12deg;
+
+  transform: rotateX(var(--pitch)) rotateY(var(--yaw));
+  transition: transform 160ms ease-out;
+}
+
+.bs-brand-stage[data-dragging] .bs-brand-rotor {
+  transition: none;
+}
+
+.bs-brand-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bs-brand-depth {
+  color: #234578;
+  transform: translateZ(-4px);
+}
+
+.bs-brand-middle {
+  color: #37639f;
+  transform: translateZ(0);
+}
+
+.bs-brand-front {
+  transform: translateZ(4px);
+}
+
+.bs-brand-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes bs-logo-intro {
+  from {
+    transform: translateY(6px) rotateY(-115deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) rotateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-login::before,
+  .bs-brand-intro {
+    animation: none;
+  }
+
+  .bs-brand-rotor {
+    transition: none;
+  }
+}

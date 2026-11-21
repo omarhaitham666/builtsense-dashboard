@@ -1,245 +1,196 @@
 .bs-login {
-  --login-bg: #0d1015;
-  --login-border: #303846;
-  --login-blue: #337cf5;
-  --login-gold: #f5bd20;
+  --brand-blue: #76a8ff;
+  --button-blue: #245cc5;
+  --surface: #121925;
+  --field: #0d1420;
+  --border: #354258;
 
+  min-height: 100vh;
   min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: 32px 20px;
-  color: #edf2fa;
+  color: #f3f6fc;
   color-scheme: dark;
   background:
-    radial-gradient(ellipse at 85% 12%, #162840 0%, transparent 43%),
-    radial-gradient(ellipse at 8% 92%, #192330 0%, transparent 38%),
-    var(--login-bg);
+    radial-gradient(ellipse at 50% 35%, #182c49 0%, transparent 52%),
+    #090e16;
 }
 
-.bs-login__stage {
-  width: min(100%, 420px);
-  position: relative;
+.bs-login-shell {
+  width: min(100%, 410px);
 }
 
-.bs-login__brand {
+.bs-login-brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 66px;
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.bs-login__logo {
-  display: block;
-  width: 154px;
-  height: auto;
-  /* ترفع وضوح الكتابة الرمادي في اللوجو الأصلي على الخلفية الدارك. */
-  filter: brightness(1.45);
-}
-
-.bs-login__wordmark {
-  font-family: Arial, sans-serif;
-  font-size: 25px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
-.bs-login__wordmark strong {
-  color: var(--login-gold);
-}
-
-.bs-login__card {
-  position: relative;
-  padding: clamp(24px, 5vw, 36px);
-  border: 1px solid var(--login-border);
-  border-radius: 20px;
-  background: linear-gradient(155deg, #1b212b, #14191f 65%);
-  box-shadow: 0 24px 64px rgb(0 0 0 / 28%);
-}
-
-.bs-login__header {
-  margin-bottom: 30px;
-}
-
-.bs-login__accent {
-  display: block;
-  width: 32px;
-  height: 4px;
-  margin-bottom: 14px;
-  border-radius: 4px;
-  background: var(--login-gold);
-}
-
-.bs-login__header h1 {
-  margin: 0;
-  font-size: clamp(26px, 4vw, 34px);
-  font-weight: 750;
-  line-height: 1.4;
-}
-
-.bs-login__form,
-.bs-login__field {
-  display: grid;
-}
-
-.bs-login__form {
-  gap: 21px;
-}
-
-.bs-login__field {
-  gap: 9px;
-}
-
-.bs-login__field label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #dce4ef;
-}
-
-.bs-login__input-wrap {
-  display: flex;
-  align-items: center;
   gap: 12px;
-  min-height: 52px;
-  padding-inline: 14px;
-  border: 1px solid #3a4453;
-  border-radius: 10px;
-  background: #10151c;
-  color: #9aa9bd;
+  margin-bottom: 28px;
+  animation: bs-brand-enter 680ms cubic-bezier(.2, .75, .25, 1) both;
 }
 
-.bs-login__input-wrap:focus-within {
-  border-color: #699fff;
-  box-shadow: 0 0 0 3px rgb(51 124 245 / 16%);
-}
-
-.bs-login__input-wrap > svg {
+.bs-login-mark {
   flex-shrink: 0;
+  filter: drop-shadow(0 6px 16px rgb(66 127 255 / 22%));
 }
 
-.bs-login__input-wrap input {
-  flex: 1;
-  min-width: 0;
-  width: 100%;
-  height: 50px;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: #edf2fa;
-  font: inherit;
-  text-align: left;
+.bs-login-wordmark {
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: clamp(30px, 6vw, 38px);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 1;
 }
 
-.bs-login__input-wrap input::placeholder {
-  color: #78879b;
+.bs-login-wordmark > span {
+  color: var(--brand-blue);
 }
 
-.bs-login__eye {
+.bs-login-card {
+  position: relative;
   display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  gap: 22px;
+  padding: clamp(24px, 5vw, 36px);
+  border: 1px solid #2b3950;
+  border-radius: 22px;
+  background: linear-gradient(155deg, #192334, var(--surface) 58%);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 28%);
+  animation: bs-form-enter 420ms ease-out 350ms both;
+}
+
+.bs-login-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  inset-inline: 16%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brand-blue), transparent);
+}
+
+.bs-login-card h1 {
+  margin: 0 0 2px;
+  font-size: clamp(25px, 5vw, 30px);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.bs-login-field {
+  display: grid;
+  gap: 8px;
+}
+
+.bs-login-field label {
+  color: #d4deed;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.bs-login-field input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  outline: none;
+  background: var(--field);
+  color: #f3f6fc;
+  font: inherit;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.bs-login-field input::placeholder {
+  color: #8291a7;
+}
+
+.bs-login-field input:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px rgb(118 168 255 / 17%);
+}
+
+.bs-login-password {
+  position: relative;
+}
+
+.bs-login-password input {
+  padding-right: 68px;
+}
+
+.bs-login-toggle {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  min-height: 38px;
+  padding: 0 10px;
   border: 0;
   border-radius: 7px;
   background: transparent;
-  color: #a5b3c5;
+  color: var(--brand-blue);
   cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
-.bs-login__eye:hover {
-  background: #242e3c;
-  color: white;
-}
-
-.bs-login__submit {
+.bs-login-submit {
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 50px;
-  margin-top: 4px;
-  border: 1px solid #4d8cff;
-  border-radius: 10px;
-  background: #205fcb;
+  gap: 10px;
+  border: 1px solid #4881e4;
+  border-radius: 11px;
+  background: var(--button-blue);
   color: white;
+  cursor: pointer;
   font: inherit;
   font-weight: 700;
-  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
-.bs-login__submit:hover:not(:disabled) {
-  background: #286de1;
+.bs-login-submit:hover:enabled {
+  background: #2b68d7;
 }
 
-.bs-login__submit:disabled {
+.bs-login-submit:active:enabled {
+  transform: translateY(1px);
+}
+
+.bs-login-submit:disabled {
   cursor: wait;
-  opacity: 0.8;
+  opacity: 0.78;
 }
 
-.bs-login__eye:focus-visible,
-.bs-login__submit:focus-visible {
-  outline: 2px solid var(--login-gold);
+.bs-login-submit:focus-visible,
+.bs-login-toggle:focus-visible {
+  outline: 2px solid var(--brand-blue);
   outline-offset: 3px;
 }
 
-.bs-login__error {
+.bs-login-error {
   margin: 0;
-  padding: 11px 14px;
-  border-inline-start: 3px solid var(--login-gold);
-  border-radius: 6px;
-  background: #29251c;
-  color: #ffda82;
-  font-size: 14px;
-  line-height: 1.7;
+  color: #ffb4b4;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .bs-login__brand {
-    animation: bs-brand-enter 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .bs-login__card {
-    animation: bs-form-enter 380ms 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  /* لو المستخدم بدأ بالكيبورد، الفورم تظهر فور وصول التركيز ليها. */
-  .bs-login__card:focus-within {
-    animation: none;
-  }
-
-  .bs-login__input-wrap,
-  .bs-login__submit {
-    transition:
-      background-color 160ms ease,
-      border-color 160ms ease,
-      box-shadow 160ms ease;
-  }
-
-  .bs-login__submit:active:not(:disabled) {
-    transform: translateY(1px);
-  }
-
-  .bs-login__spinner {
-    animation: bs-spin 800ms linear infinite;
-  }
+.bs-login-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgb(255 255 255 / 35%);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: bs-login-spin 700ms linear infinite;
 }
 
 @keyframes bs-brand-enter {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(135px) scale(1.18);
+    transform: translateY(32px) scale(.94);
   }
-
-  28% {
-    opacity: 1;
-    transform: translateY(135px) scale(1.18);
-  }
-
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
@@ -248,17 +199,29 @@
 @keyframes bs-form-enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes bs-spin {
+@keyframes bs-login-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-login-brand,
+  .bs-login-card,
+  .bs-login-spinner {
+    animation: none;
+  }
+
+  .bs-login-field input,
+  .bs-login-submit {
+    transition: none;
   }
 }
