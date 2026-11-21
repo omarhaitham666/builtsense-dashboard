@@ -11,9 +11,15 @@ import {
 import EmployeesPage from "../features/team/ui/EmployeesPage";
 import UsersPage from "../features/users/ui/UsersPage";
 import AppLayout from "./layouts/AppLayout";
-import { navigationItems, type PageId, type Role } from "./navigation";
+import { navigationItems, type PageId } from "./navigation";
 
-function Workspace({ role }: { role: Role }) {
+type WorkspaceProps = {
+  profile: Profile;
+};
+
+function Workspace({ profile }: WorkspaceProps) {
+  const { id, role } = profile;
+
   const [activePage, setActivePage] = useState<PageId>(
     role === "admin" ? "users" : "my-report"
   );
@@ -25,7 +31,7 @@ function Workspace({ role }: { role: Role }) {
   function renderPage() {
     switch (currentPage?.id) {
       case "users":
-        return <UsersPage />;
+        return <UsersPage accountId={id} />;
 
       case "team":
         return <EmployeesPage />;
@@ -65,7 +71,6 @@ export default function App() {
     setSessionError("");
 
     const unsubscribe = onSignedOut(() => {
-      // لو المستخدم خرج أثناء تحميل الحساب، نتجاهل نتيجة الطلب القديم.
       active = false;
       setProfile(null);
       setSessionError("");
@@ -118,9 +123,7 @@ export default function App() {
           </p>
         ) : (
           <div className="grid w-full max-w-sm gap-4 rounded-xl border border-[#303846] bg-[#15191f] p-6 text-center">
-            <p role="alert" className="text-amber-300">
-              {sessionError}
-            </p>
+            <p role="alert" className="text-amber-300">{sessionError}</p>
 
             <button
               type="button"
@@ -147,5 +150,5 @@ export default function App() {
     return <LoginPage onLogin={setProfile} />;
   }
 
-  return <Workspace key={profile.id} role={profile.role} />;
+  return <Workspace key={profile.id} profile={profile} />;
 }
